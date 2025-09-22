@@ -1,0 +1,46 @@
+[
+  {
+    "name": "Komal",
+    "email": "komal@example.com",
+    "password": "123456"
+  },
+  {
+    "name": "Test User",
+    "email": "test@example.com",
+    "password": "password"
+  },
+  {
+    "name": "komal satghare",
+    "email": "komalsatghare@gmail.com",
+    "password": "Komal@123",
+    "phone": "7721854721",
+    "dateOfBirth": "2004-01-09",
+    "faceImage": "faceImage-1758458197096-767671942.jpg",
+    "document": "document-1758458197098-151088155.png",
+    "verificationStatus": "completed",
+    "registrationDate": "2025-09-21T12:36:37.120Z",
+    "bio": "i'm a student,studying in K.Kwagh college of engineering .i'm pursuing third year .",
+    "tripRequests": [
+      {
+        "id": 1758459628603,
+        "source": "nashik-road",
+        "destination": "nagpur",
+        "date": "2025-02-12",
+        "time": "18:30",
+        "preferences": [],
+        "createdAt": "2025-09-21T13:00:28.603Z",
+        "status": "active"
+      },
+      {
+        "id": 1758518120695,
+        "source": "Nagpur",
+        "destination": "Nashik Road",
+        "date": "2025-09-22",
+        "time": "18:30",
+        "preferences": [],
+        "createdAt": "2025-09-22T05:15:20.695Z",
+        "status": "active"
+      }
+    ]
+  }
+]

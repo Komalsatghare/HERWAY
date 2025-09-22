@@ -1,0 +1,331 @@
+/* Safety Hero Section */
+.safety-hero {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  padding: 120px 0 80px;
+  text-align: center;
+}
+
+.safety-hero-content h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.safety-hero-content p {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 0 auto;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+/* Security Features Section */
+.security-features {
+  background: var(--background-primary);
+}
+
+.security-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.security-card {
+  padding: 32px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.security-card:hover {
+  transform: translateY(-8px);
+}
+
+.security-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  color: white;
+}
+
+.security-card h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.security-card p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.security-features-list {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+}
+
+.security-features-list li {
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  padding-left: 20px;
+  position: relative;
+}
+
+.security-features-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+/* Safety Guidelines Section */
+.safety-guidelines {
+  background: var(--background-secondary);
+}
+
+.guidelines-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 48px;
+  margin-top: 48px;
+}
+
+.guideline-section h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+  color: var(--text-primary);
+}
+
+.guideline-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.guideline-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.guideline-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--success-color);
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.guideline-content h4 {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.guideline-content p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Emergency Section */
+.emergency-section {
+  background: var(--background-primary);
+}
+
+.emergency-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.emergency-card {
+  text-align: center;
+  padding: 32px 24px;
+  transition: all 0.3s ease;
+}
+
+.emergency-card:hover {
+  transform: translateY(-4px);
+}
+
+.emergency-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  color: white;
+}
+
+.emergency-icon.emergency {
+  background: var(--error-color);
+}
+
+.emergency-icon.women-helpline {
+  background: var(--primary-color);
+}
+
+.emergency-icon.herway-support {
+  background: var(--secondary-color);
+}
+
+.emergency-icon.cyber-crime {
+  background: var(--warning-color);
+}
+
+.emergency-card h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.emergency-number {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 8px;
+}
+
+.emergency-card p:last-child {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* Safety Tips Section */
+.safety-tips {
+  background: var(--background-secondary);
+}
+
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.tip-card {
+  background: var(--background-primary);
+  padding: 24px;
+  border-radius: var(--border-radius);
+  border-left: 4px solid var(--primary-color);
+}
+
+.tip-card h4 {
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.tip-card p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Safety CTA Section */
+.safety-cta {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  text-align: center;
+}
+
+.cta-content h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.cta-content p {
+  font-size: 1.2rem;
+  margin-bottom: 32px;
+  opacity: 0.9;
+}
+
+.cta-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cta-actions .btn-secondary {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.cta-actions .btn-secondary:hover {
+  background: white;
+  color: var(--primary-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .safety-hero-content h1 {
+    font-size: 2.5rem;
+  }
+
+  .safety-hero-content p {
+    font-size: 1rem;
+  }
+
+  .security-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .guidelines-container {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .emergency-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tips-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-content h2 {
+    font-size: 2rem;
+  }
+
+  .cta-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .safety-hero {
+    padding: 80px 0 60px;
+  }
+
+  .safety-hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .emergency-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .security-card,
+  .emergency-card {
+    padding: 24px 16px;
+  }
+}

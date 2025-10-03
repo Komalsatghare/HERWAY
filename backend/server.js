@@ -1,5 +1,7 @@
 const multer = require("multer");
 const path = require("path");
+require('dotenv').config();
+const { db, admin } = require('./config/firebaseadmin'); 
 // ----------------------
 // Required modules
 // ----------------------
@@ -9,6 +11,7 @@ const cors = require("cors");   // ✅ added cors
 
 const app = express();
 app.use(express.json());        // to parse JSON
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());                // ✅ enable cors for frontend (localhost:3000)
 
 // Create uploads directory if it doesn't exist
@@ -64,11 +67,12 @@ const fileFilter = (req, file, cb) => {
 };
 
 const upload = multer({ 
-  storage: storage,
-  fileFilter: fileFilter,
-  limits: {
-    fileSize: 5 * 1024 * 1024 // 5MB limit
-  }
+    // OLD diskStorage is GONE. We now use memoryStorage.
+    storage: multer.memoryStorage(), 
+    fileFilter: fileFilter, 
+    limits: {
+        fileSize: 5 * 1024 * 1024 // 5MB limit
+    }
 });
 
 // ----------------------
@@ -139,48 +143,95 @@ app.post("/register", (req, res) => {
 // ----------------------
 // Face Verification Upload route
 // ----------------------
-app.post("/upload-face-photo", upload.single("faceImage"), (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ error: "No face image uploaded" });
-  }
+// server.js (Where the old /upload-face-photo route was)
 
-  res.json({
-    message: "Face photo uploaded successfully ✅",
-    file: {
-      filename: req.file.filename,
-      path: req.file.path,
-    },
-  });
+// NOTE: Add this import at the very top of server.js with your other requires:
+// const { uploadToFirebase } = require('./utils/upload'); 
+
+app.post("/upload-face-photo", upload.single("faceImage"), async (req, res) => {
+    // 1. Basic checks
+    if (!req.file || !req.body.email) {
+        return res.status(400).json({ error: "No image or email provided." });
+    }
+    
+    try {
+        // 2. Generate secure file name
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const fileExtension = path.extname(req.file.originalname);
+        const filename = `faceImage-${uniqueSuffix}${fileExtension}`;
+        
+        // 3. Upload to Firebase Storage (using the utility function)
+        const fileUrl = await uploadToFirebase(
+            req.file.buffer, 
+            'faces/', // Folder name in your bucket
+            filename, 
+            req.file.mimetype
+        );
+
+        // 4. Update the user's secure profile in Firestore
+        const userRef = db.collection('users').doc(req.body.email);
+        await userRef.update({
+            faceImageUrl: fileUrl, // Save the public URL
+            faceImageStatus: 'uploaded'
+        });
+
+        res.json({
+            message: "Face photo uploaded successfully to Firebase Storage ✅",
+            url: fileUrl,
+        });
+    } catch (error) {
+        console.error("Firebase Storage Upload Error:", error);
+        res.status(500).json({ error: "Failed to upload file to storage." });
+    }
 });
 
 // ----------------------
 // Document Verification Upload route
 // ----------------------
-app.post("/upload-document", upload.single("document"), (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ error: "No document uploaded" });
-  }
+// server.js (Where the old /upload-document route was)
 
-  // Basic document verification logic
-  // In a real application, you would use OCR (Optical Character Recognition) 
-  // or AI services to extract text from the document image
-  const verificationResult = {
-    isFemale: true, // Default to true for female users of HerWay app
-    documentType: "Aadhar Card",
-    extractedGender: "Female", // Since this is HerWay app, assume female
-    confidence: 0.95, // High confidence for manual verification
-    status: "verified",
-    message: "Document accepted for female verification"
-  };
+app.post("/upload-document", upload.single("document"), async (req, res) => {
+    if (!req.file || !req.body.email) {
+        return res.status(400).json({ error: "No document or email provided." });
+    }
 
-  res.json({
-    message: "Document uploaded and verified successfully ✅",
-    verification: verificationResult,
-    file: {
-      filename: req.file.filename,
-      path: req.file.path,
-    },
-  });
+    try {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const fileExtension = path.extname(req.file.originalname);
+        const filename = `document-${uniqueSuffix}${fileExtension}`;
+        
+        // 1. Upload to Firebase Storage
+        const fileUrl = await uploadToFirebase(
+            req.file.buffer, 
+            'documents/', // Folder name in your bucket
+            filename, 
+            req.file.mimetype
+        );
+        
+        // 2. Update user's secure profile in Firestore
+        const userRef = db.collection('users').doc(req.body.email);
+        await userRef.update({
+            documentImageUrl: fileUrl, // Save the public URL
+            documentStatus: 'uploaded'
+        });
+
+        // 3. Respond with verification success (you can keep your existing verification logic structure)
+        const verificationResult = {
+            isFemale: true, 
+            documentType: "Aadhar Card",
+            status: "pending_review", // Status should be pending until admin checks
+            message: "Document uploaded. Pending admin review."
+        };
+
+        res.json({
+            message: "Document uploaded successfully to Firebase Storage ✅",
+            verification: verificationResult,
+            url: fileUrl
+        });
+    } catch (error) {
+        console.error("Firebase Storage Upload Error:", error);
+        res.status(500).json({ error: "Failed to upload file to storage." });
+    }
 });
 
 // ----------------------
